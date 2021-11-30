@@ -16,11 +16,13 @@ import java.util.stream.Collectors;
 public class BrandService extends BaseService<BrandDTO, Brand> {
 
     private final BrandRepository brandRepository;
+    private final MonitorService monitorService;
 
     @Autowired
-    public BrandService(BrandRepository brandRepository) {
+    public BrandService(BrandRepository brandRepository, MonitorService monitorService) {
         super(BrandDTO.class, Brand.class);
         this.brandRepository = brandRepository;
+        this.monitorService = monitorService;
     }
 
     public List<BrandDTO> getAllBrands() {
@@ -53,6 +55,8 @@ public class BrandService extends BaseService<BrandDTO, Brand> {
     public void deleteBrand(final Long id) {
         brandRepository.findById(id)
                 .map(deleteBrand -> {
+                    monitorService.getMonitorsByBrandId(id)
+                            .forEach(monitorDTO -> monitorService.deleteMonitor(monitorDTO.getId()));
                     brandRepository.deleteById(id);
                     return deleteBrand;
                 })

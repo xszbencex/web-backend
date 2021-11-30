@@ -25,6 +25,10 @@ public class MonitorService extends BaseService<MonitorDTO, Monitor> {
         return monitorRepository.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
+    public List<MonitorDTO> getMonitorsByBrandId(final Long brandId) {
+        return monitorRepository.findAllByBrand_Id(brandId).stream().map(this::mapToDTO).collect(Collectors.toList());
+    }
+
     public MonitorDTO getMonitorById(final Long id) {
         final Monitor monitor = monitorRepository.findById(id).orElseThrow(() ->
                 new CustomException("Id not found", HttpStatus.NOT_FOUND));

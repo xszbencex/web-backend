@@ -4,7 +4,6 @@ import inf.unideb.webbackend.dto.BrandDTO;
 import inf.unideb.webbackend.exception.CustomException;
 import inf.unideb.webbackend.model.Brand;
 import inf.unideb.webbackend.repository.BrandRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +17,6 @@ public class BrandService extends BaseService<BrandDTO, Brand> {
     private final BrandRepository brandRepository;
     private final MonitorService monitorService;
 
-    @Autowired
     public BrandService(BrandRepository brandRepository, MonitorService monitorService) {
         super(BrandDTO.class, Brand.class);
         this.brandRepository = brandRepository;

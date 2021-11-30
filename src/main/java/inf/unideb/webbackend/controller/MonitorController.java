@@ -2,6 +2,7 @@ package inf.unideb.webbackend.controller;
 
 import inf.unideb.webbackend.dto.MonitorDTO;
 import inf.unideb.webbackend.service.MonitorService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/monitor")
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:4200")
 public class MonitorController {
 
     private final MonitorService monitorService;
@@ -36,16 +37,19 @@ public class MonitorController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public MonitorDTO saveMonitor(@RequestBody final MonitorDTO monitor) {
         return monitorService.saveMonitor(monitor);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public MonitorDTO updateMonitor(@RequestBody final MonitorDTO monitor, @PathVariable final Long id) {
         return monitorService.updateMonitor(monitor, id);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteMonitor(@PathVariable final Long id) {
         monitorService.deleteMonitor(id);
     }
